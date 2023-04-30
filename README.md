@@ -1,0 +1,2 @@
+# unit-4-backend
+This e-commerce backend project allows users to easily search, update, delete, and add items to their online store. With robust search functionality, users can quickly find the products they need. The ability to update and delete items ensures that inventory is up-to-date and accurate, while the ability to add new items allows for seamless expansion of the store's offerings. Overall, this project streamlines the management of an e-commerce store's backend, improving efficiency and productivity.
