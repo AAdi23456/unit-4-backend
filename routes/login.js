@@ -1,13 +1,11 @@
 const express = require("express")
-const reg_routes = express.Router()
+const Authorization = express.Router()
 const bcrypt = require("bcrypt")
-
-
 const reg_model = require("../model/reg")
-const login_rout = express.Router()
-const jwt = require("jsonwebtoken")
 
-reg_routes.post("/", async (req, res) => {
+const jwt = require("jsonwebtoken")
+const validate=require("../middleware/postmiddleware")
+Authorization.post("/signup",validate, async (req, res) => {
   const { name, email, password } = req.body
   try {
     const userr=await reg_model.findOne({email})
@@ -27,7 +25,7 @@ reg_routes.post("/", async (req, res) => {
   }
 })
   ;
-login_rout.post("/", async (req, res) => {
+Authorization.post("/login",validate, async (req, res) => {
   const { email, password } = req.body
   try {
     const user = await reg_model.findOne({ email })
@@ -51,7 +49,6 @@ login_rout.post("/", async (req, res) => {
 
 
 
-module.exports = {
-  reg_routes,
-  login_rout,
-}
+module.exports =  Authorization
+
+

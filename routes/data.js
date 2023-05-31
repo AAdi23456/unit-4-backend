@@ -3,15 +3,10 @@ const express = require("express")
 const notes_post = express.Router()
 const kidsmodel = require("../model/kids");
 const mensmodel = require("../model/mens");
-const get_route = express.Router()
-const womens = express.Router();
-const men = express.Router();
+const Routes = express.Router()
 const menmodel = require("../model/mens");
 const womenmodel = require("../model/womens");
-const menid=express.Router();
-const womenid=express.Router();
-
-notes_post.post("/", async (req, res) => {
+Routes.post("/kid/add", async (req, res) => {
     const notes = req.body;
     if (notes) {
         replacedoolor(notes)
@@ -19,7 +14,7 @@ notes_post.post("/", async (req, res) => {
     await kidsmodel.insertMany(notes);
     res.json({ "msg": ` data added` });
 });
-womens.post("/", async (req, res) => {
+Routes.post("/womens/add", async (req, res) => {
     const notes = req.body;
     if (notes) {
         replacedoolor(notes)
@@ -27,7 +22,7 @@ womens.post("/", async (req, res) => {
     await womenmodel.insertMany(notes);
     res.json({ "msg": ` data added` });
 })
-men.post("/", async (req, res) => {
+Routes.post("/men/add", async (req, res) => {
     const notes = req.body;
     if (notes) {
         replacedoolor(notes)
@@ -36,7 +31,7 @@ men.post("/", async (req, res) => {
     res.json({ "msg": ` data added` });
 })
 
-get_route.get("/", async (req, res) => {
+Routes.get("/kid/show", async (req, res) => {
 
 
 
@@ -70,7 +65,7 @@ get_route.get("/", async (req, res) => {
     }
 });
 
-womens.get("/", async (req, res) => {
+Routes.get("/womens/show", async (req, res) => {
     try {
         let query = {};
         if (req.query.title) {
@@ -102,7 +97,7 @@ womens.get("/", async (req, res) => {
 
 })
 
-men.get("/", async (req, res) => {
+Routes.get("/men/show", async (req, res) => {
     try {
         let query = {};
         if (req.query.title) {
@@ -135,7 +130,7 @@ men.get("/", async (req, res) => {
 })
 
 
-notes_post.get("/:id", async (req, res) => {
+Routes.get("/kid/one/:id", async (req, res) => {
 
     try {
         if (req.params) {
@@ -151,7 +146,7 @@ notes_post.get("/:id", async (req, res) => {
         console.log(error);
     }
 })
-menid.get("/:id", async (req, res) => {
+Routes.get("/men/one/:id", async (req, res) => {
 
     try {
         if (req.params) {
@@ -167,7 +162,7 @@ menid.get("/:id", async (req, res) => {
         console.log(error);
     }
 })
-womenid.get("/:id", async (req, res) => {
+Routes.get("women/one/:id", async (req, res) => {
 
     try {
         if (req.params) {
@@ -187,7 +182,7 @@ womenid.get("/:id", async (req, res) => {
 
 
 
-get_route.delete("/:id", async (req, res) => {
+Routes.delete("/kid/deleteone/:id", async (req, res) => {
 
     try {
 
@@ -217,7 +212,6 @@ function replacedoolor(data) {
 
 
 
-module.exports = {
-    notes_post, womens, men, get_route,menid,womenid
+module.exports = Routes
 
-}
+  
