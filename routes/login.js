@@ -5,7 +5,7 @@ const reg_model = require("../model/reg")
 
 const jwt = require("jsonwebtoken")
 const validate=require("../middleware/postmiddleware")
-Authorization.post("/signup",validate, async (req, res) => {
+Authorization.post("/signup", async (req, res) => {
   const { name, email, password } = req.body
   try {
     const userr=await reg_model.findOne({email})
@@ -25,7 +25,7 @@ Authorization.post("/signup",validate, async (req, res) => {
   }
 })
   ;
-Authorization.post("/login",validate, async (req, res) => {
+Authorization.post("/login", async (req, res) => {
   const { email, password } = req.body
   try {
     const user = await reg_model.findOne({ email })
@@ -36,7 +36,7 @@ Authorization.post("/login",validate, async (req, res) => {
         console.log(password);
 
         if (result) {
-          res.status(200).json({ "msg": "Login successfull!", "token": jwt.sign({ "userID": user._id }, "masai"),"name":user.name})
+          res.status(200).json({ "msg": "Login successfull!", "token": jwt.sign({ "email": user.email }, "masai"),"name":user.name})
         } else {
           res.status(400).json({ "msg": "Wrong Credentials" })
         }

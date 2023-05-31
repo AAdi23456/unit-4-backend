@@ -6,6 +6,8 @@ const Validate=(req,res,next)=>{
     console.log(token);
     if(token){
         const decoded=jwt.verify(token,"masai")
+        console.log(decoded);
+        req.body.email=decoded.email
             next()
         } else {
             res.status(400).json({"msg":"Please Login First"})
