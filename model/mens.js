@@ -1,9 +1,9 @@
 const mongoose = require("mongoose")
 
 const notesschema = mongoose.Schema({
-    img:Array,
+    img:String,
     title: String,
-    Brand:String,
+    brand:String,
     price: String,
     category:String,
     colour:String,
