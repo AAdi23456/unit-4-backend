@@ -14,7 +14,7 @@ CartRoute.post("/add", validate, async (req, res) => {
             return res.status(405).json({msg:"Please select the item first"})
         }
 
-        const ExistinginCart =await cartmodel.find({ title, price, img, brand, email })
+        const ExistinginCart=await cartmodel.find({ title, price, img, brand, email })
         
         if (ExistinginCart.length>0) {
             return res.status(200).json({msg:"Item is already present in the cart"})
@@ -53,14 +53,35 @@ CartRoute.delete("/Remove/:id",validate, async (req, res) => {
     try {
         const { id } = req.params
         const {email}=req.body
-        const data=await cartmodel.find({email})
-        for(const item of data){
-            if(item._id==id){
-                const CartData = await cartmodel.findByIdAndDelete(id)
-                return res.status(200).json("Item removed from cart")
-            }
+        const deletedItem = await cartmodel.findOneAndDelete({ _id: id, email });
+
+        if (deletedItem) {
+          return res.status(200).json("Item removed from cart");
+        } else {
+          return res.status(200).json({ msg: "Item is not present in your cart" });
         }
-        return res.status(200).json({msg:"item is not present in your cart"})
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(error)
+    }
+
+})
+CartRoute.patch("/quantity/:id", async (req, res) => {
+    try {
+        const { id } = req.params
+        const {email,q}=req.body
+        const DataFromDB = await cartmodel.findOne({ _id: id, email });
+        if(q&&q>0){
+    if (DataFromDB) {
+        DataFromDB.quantity=q
+        await  DataFromDB.save()
+        return res.status(200).json({msg:"qunatity changed in your cart"});
+      } else {
+        return res.status(200).json({ msg: "Item is not present in your cart" });
+      }
+    }
+    return res.status(200).json({ msg: "please provide the updated qunatity" });
+       
     } catch (error) {
         console.log(error);
         res.status(500).json(error)
