@@ -6,11 +6,12 @@ const Authrozation=require("./routes/login")
 const {connection}  = require("./conncetion")
 const  Routes  = require("./routes/data")
 const cart=require("./routes/cart")
-
+const payment=require("./routes/payment")
 app.use(cors())
 app.use("/cart",cart)
 app.use("/",Routes)
 app.use("/auth",Authrozation)
+app.use("/aadiswipe",payment)
 app.listen(3000, () => {
     try {
         connection()

@@ -30,7 +30,7 @@ CartRoute.post("/add", validate, async (req, res) => {
     }
 
 })
-CartRoute.get("/show", validate, async (req, res) => {
+CartRoute.post("/show",validate, async (req, res) => {
     try {
         const { email } = req.body
 
@@ -56,7 +56,7 @@ CartRoute.delete("/Remove/:id",validate, async (req, res) => {
         const deletedItem = await cartmodel.findOneAndDelete({ _id: id, email });
 
         if (deletedItem) {
-          return res.status(200).json("Item removed from cart");
+          return res.status(200).json({msg:"Item removed from cart"});
         } else {
           return res.status(200).json({ msg: "Item is not present in your cart" });
         }
@@ -66,7 +66,7 @@ CartRoute.delete("/Remove/:id",validate, async (req, res) => {
     }
 
 })
-CartRoute.patch("/quantity/:id", async (req, res) => {
+CartRoute.patch("/quantity/:id",validate, async (req, res) => {
     try {
         const { id } = req.params
         const {email,q}=req.body
