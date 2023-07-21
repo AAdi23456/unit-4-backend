@@ -40,7 +40,7 @@ Authorization.post("/login", async (req, res) => {
         console.log(err);
         console.log(password);
 
-        if (!result) {
+        if (err) {
          return res.status(400).json({ "msg": "Wrong Credentials" })
         
         }
